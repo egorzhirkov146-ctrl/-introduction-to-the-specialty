@@ -7,53 +7,52 @@ on:
     branches: [ main, master ]
 
 jobs:
-  simple-check:
-    name: Проверка наличия файлов
+  html-check:
+    name: Проверка HTML
     runs-on: ubuntu-latest
 
     steps:
       - name: Клонирование репозитория
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Проверка README.md
-        run: |
-          if [ -f "README.md" ]; then
-            echo "✅ README.md найден"
-          else
-            echo "❌ README.md не найден"
-            exit 1
-          fi
+      - name: Установка html-validator
+        run: npm install -g html-validate
 
-      - name: Проверка frontend/index.html
-        run: |
-          if [ -f "frontend/index.html" ]; then
-            echo "✅ frontend/index.html найден"
-          else
-            echo "❌ frontend/index.html не найден"
-            exit 1
-          fi
+      - name: Проверка index.html
+        run: html-validate frontend/index.html
 
-      - name: Проверка backend/server.js
+  prettier-check:
+    name: Проверка форматирования (Prettier)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Клонирование репозитория
+        uses: actions/checkout@v4
+
+      - name: Установка Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Запуск Prettier проверки
         run: |
-          if [ -f "backend/server.js" ]; then
-            echo "✅ backend/server.js найден"
-          else
-            echo "❌ backend/server.js не найден"
-            exit 1
-          fi
+          npx prettier --check frontend/index.html --write
 
   quality-gate:
     name: Quality Gate
     runs-on: ubuntu-latest
-    needs: [simple-check]
+    needs: [html-check, prettier-check]
     if: always()
 
     steps:
-      - name: Проверка статуса
+      - name: Проверка всех джоб
         run: |
-          if [[ "${{ needs.simple-check.result }}" == "success" ]]; then
-            echo "✅ Все проверки пройдены! PR можно мёржить."
-          else
-            echo "❌ Ошибка в проверках"
+          if [[ "${{ needs.html-check.result }}" != "success" ]]; then
+            echo "Ошибка: HTML проверка не пройдена"
             exit 1
           fi
+          if [[ "${{ needs.prettier-check.result }}" != "success" ]]; then
+            echo "Ошибка: форматирование не пройдено"
+            exit 1
+          fi
+          echo "Все проверки пройдены! PR можно мёржить."
