@@ -7,34 +7,101 @@ on:
     branches: [ main, master ]
 
 jobs:
-  simple-check:
-    name: Проверка наличия CI файла
+  yaml-lint:
+    name: Проверка синтаксиса YAML
     runs-on: ubuntu-latest
 
     steps:
       - name: Клонирование репозитория
         uses: actions/checkout@v4
 
-      - name: Проверка наличия CI файла
+      - name: Установка yamllint
+        run: pip install yamllint
+
+      - name: Проверка CI файла
+        run: yamllint .github/workflows/ci.yml
+
+  actionlint:
+    name: Проверка GitHub Actions
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Клонирование репозитория
+        uses: actions/checkout@v4
+
+      - name: Установка actionlint
         run: |
-          if [ -f ".github/workflows/ci.yml" ]; then
-            echo "✅ CI pipeline найден"
-          else
-            echo "❌ CI файл отсутствует"
+          curl -sS https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash | bash
+          sudo mv ./actionlint /usr/local/bin/
+
+      - name: Проверка workflow
+        run: actionlint .github/workflows/ci.yml
+
+  formatting:
+    name: Проверка форматирования YAML
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Клонирование репозитория
+        uses: actions/checkout@v4
+
+      - name: Установка prettier
+        run: npm install -g prettier
+
+      - name: Проверка форматирования
+        run: prettier --check .github/workflows/ci.yml
+
+  security:
+    name: Проверка безопасности
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Клонирование репозитория
+        uses: actions/checkout@v4
+
+      - name: Проверка секретов в коде
+        run: |
+          if grep -r -E "(password|secret|token|key)" .github/workflows/ci.yml --exclude-dir=.git | grep -v "echo"; then
+            echo "❌ Найдены потенциальные секреты в CI файле"
             exit 1
+          else
+            echo "✅ Секреты не найдены"
           fi
 
   quality-gate:
     name: Quality Gate
     runs-on: ubuntu-latest
-    needs: [simple-check]
+    needs: [yaml-lint, actionlint, formatting, security]
     if: always()
+
     steps:
-      - name: Проверка статуса
+      - name: Проверка всех джоб
         run: |
-          if [[ "${{ needs.simple-check.result }}" == "success" ]]; then
-            echo "✅ Все проверки пройдены! PR можно мёржить."
-          else
-            echo "❌ Ошибка в проверках"
+          FAILED=0
+          
+          if [[ "${{ needs.yaml-lint.result }}" != "success" ]]; then
+            echo "❌ YAML линтер не пройден"
+            FAILED=1
+          fi
+          
+          if [[ "${{ needs.actionlint.result }}" != "success" ]]; then
+            echo "❌ Actionlint не пройден"
+            FAILED=1
+          fi
+          
+          if [[ "${{ needs.formatting.result }}" != "success" ]]; then
+            echo "❌ Форматирование не пройдено"
+            FAILED=1
+          fi
+          
+          if [[ "${{ needs.security.result }}" != "success" ]]; then
+            echo "❌ Проверка безопасности не пройдена"
+            FAILED=1
+          fi
+          
+          if [[ $FAILED -eq 1 ]]; then
+            echo "❌ Некоторые проверки не пройдены"
             exit 1
+          else
+            echo "✅ Все проверки пройдены! CI файл корректен."
           fi
