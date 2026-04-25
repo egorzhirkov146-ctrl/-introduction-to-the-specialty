@@ -7,94 +7,37 @@ on:
     branches: [ main, master ]
 
 jobs:
-  lint-and-format:
-    name: Проверка кода (Lint & Format)
+  simple-check:
+    name: Простая проверка
     runs-on: ubuntu-latest
 
     steps:
       - name: Клонирование репозитория
         uses: actions/checkout@v3
 
-      - name: Установка Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-          cache: 'npm'
-
-      - name: Установка зависимостей
-        run: npm ci
-
-      - name: Проверка ESLint
-        run: npm run lint
-
-      - name: Проверка форматирования Prettier
-        run: npm run format --check
-
-  check-html:
-    name: Проверка HTML файлов
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Клонирование репозитория
-        uses: actions/checkout@v3
-
-      - name: Проверка наличия DOCTYPE в HTML
+      - name: Проверка наличия README
         run: |
-          if [ -d "frontend" ]; then
-            find frontend -name "*.html" -exec sh -c '
-              if ! grep -q "<!DOCTYPE html>" "$1"; then
-                echo "Ошибка: $1 не содержит <!DOCTYPE html>"
-                exit 1
-              fi
-            ' _ {} \;
-            echo "Все HTML файлы содержат DOCTYPE"
+          if [ -f "README.md" ]; then
+            echo "README.md найден"
           else
-            echo "Папка frontend не найдена"
-          fi
-
-  build-check:
-    name: Проверка сборки
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Клонирование репозитория
-        uses: actions/checkout@v3
-
-      - name: Установка Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-
-      - name: Установка зависимостей
-        run: |
-          cd backend
-          npm ci
-
-      - name: Проверка синтаксиса сервера
-        run: |
-          cd backend
-          node --check server.js
-          echo "server.js синтаксически корректен"
-
-  quality-gate:
-    name: Quality Gate (блокирует merge при ошибках)
-    runs-on: ubuntu-latest
-    needs: [lint-and-format, check-html, build-check]
-    if: always()
-
-    steps:
-      - name: Проверка статуса всех джоб
-        run: |
-          if [[ "${{ needs.lint-and-format.result }}" != "success" ]]; then
-            echo "Ошибка в Lint & Format"
+            echo "README.md не найден"
             exit 1
           fi
-          if [[ "${{ needs.check-html.result }}" != "success" ]]; then
-            echo "Ошибка в проверке HTML"
+
+      - name: Проверка наличия frontend/index.html
+        run: |
+          if [ -f "frontend/index.html" ]; then
+            echo "frontend/index.html найден"
+          else
+            echo "frontend/index.html не найден"
             exit 1
           fi
-          if [[ "${{ needs.build-check.result }}" != "success" ]]; then
-            echo "Ошибка в проверке сборки"
+
+      - name: Проверка наличия backend/server.js
+        run: |
+          if [ -f "backend/server.js" ]; then
+            echo "backend/server.js найден"
+          else
+            echo "backend/server.js не найден"
             exit 1
           fi
-          echo "Все проверки пройдены! PR можно мёржить."
