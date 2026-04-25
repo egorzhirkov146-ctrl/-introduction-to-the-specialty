@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Веб-калькулятор</title>
     <style>
-        * { box-sizing: border-box; }
+        * {
+            box-sizing: border-box;
+        }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
@@ -28,6 +30,7 @@
             text-align: center;
             color: #333;
             margin-bottom: 30px;
+            font-size: 24px;
         }
         input, select {
             width: 100%;
@@ -36,6 +39,7 @@
             border: 2px solid #ddd;
             border-radius: 10px;
             font-size: 18px;
+            transition: border-color 0.3s;
         }
         input:focus, select:focus {
             outline: none;
@@ -51,9 +55,13 @@
             font-size: 18px;
             font-weight: bold;
             cursor: pointer;
+            transition: transform 0.2s;
         }
         button:hover {
             transform: scale(1.02);
+        }
+        button:active {
+            transform: scale(0.98);
         }
         .result {
             margin-top: 20px;
@@ -82,8 +90,8 @@
             <option value="/">÷ (Деление)</option>
         </select>
         <input type="number" id="num2" placeholder="Второе число">
-        <button type="button" id="calculate">Вычислить</button>       
-<div id="result" class="result">Результат: —</div>
+        <button type="button" id="calculate">Вычислить</button>
+        <div id="result" class="result">Результат: —</div>
     </div>
 
     <script>
@@ -107,10 +115,14 @@
             try {
                 const response = await fetch('/api/calculate', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
                     body: JSON.stringify({ num1, num2, operation })
                 });
+
                 const data = await response.json();
+
                 if (data.error) {
                     resultDiv.textContent = `Ошибка: ${data.error}`;
                     resultDiv.classList.add('error');
