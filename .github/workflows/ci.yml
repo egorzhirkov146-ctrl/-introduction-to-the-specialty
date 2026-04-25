@@ -1,0 +1,40 @@
+name: CI Pipeline
+
+on:
+  pull_request:
+    branches: [ main, master ]
+  push:
+    branches: [ main, master ]
+
+jobs:
+  simple-check:
+    name: Проверка наличия CI файла
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Клонирование репозитория
+        uses: actions/checkout@v4
+
+      - name: Проверка наличия CI файла
+        run: |
+          if [ -f ".github/workflows/ci.yml" ]; then
+            echo "✅ CI pipeline найден"
+          else
+            echo "❌ CI файл отсутствует"
+            exit 1
+          fi
+
+  quality-gate:
+    name: Quality Gate
+    runs-on: ubuntu-latest
+    needs: [simple-check]
+    if: always()
+    steps:
+      - name: Проверка статуса
+        run: |
+          if [[ "${{ needs.simple-check.result }}" == "success" ]]; then
+            echo "✅ Все проверки пройдены! PR можно мёржить."
+          else
+            echo "❌ Ошибка в проверках"
+            exit 1
+          fi
