@@ -8,36 +8,52 @@ on:
 
 jobs:
   simple-check:
-    name: Простая проверка
+    name: Проверка наличия файлов
     runs-on: ubuntu-latest
 
     steps:
       - name: Клонирование репозитория
         uses: actions/checkout@v3
 
-      - name: Проверка наличия README
+      - name: Проверка README.md
         run: |
           if [ -f "README.md" ]; then
-            echo "README.md найден"
+            echo "✅ README.md найден"
           else
-            echo "README.md не найден"
+            echo "❌ README.md не найден"
             exit 1
           fi
 
-      - name: Проверка наличия frontend/index.html
+      - name: Проверка frontend/index.html
         run: |
           if [ -f "frontend/index.html" ]; then
-            echo "frontend/index.html найден"
+            echo "✅ frontend/index.html найден"
           else
-            echo "frontend/index.html не найден"
+            echo "❌ frontend/index.html не найден"
             exit 1
           fi
 
-      - name: Проверка наличия backend/server.js
+      - name: Проверка backend/server.js
         run: |
           if [ -f "backend/server.js" ]; then
-            echo "backend/server.js найден"
+            echo "✅ backend/server.js найден"
           else
-            echo "backend/server.js не найден"
+            echo "❌ backend/server.js не найден"
+            exit 1
+          fi
+
+  quality-gate:
+    name: Quality Gate
+    runs-on: ubuntu-latest
+    needs: [simple-check]
+    if: always()
+
+    steps:
+      - name: Проверка статуса
+        run: |
+          if [[ "${{ needs.simple-check.result }}" == "success" ]]; then
+            echo "✅ Все проверки пройдены! PR можно мёржить."
+          else
+            echo "❌ Ошибка в проверках"
             exit 1
           fi
