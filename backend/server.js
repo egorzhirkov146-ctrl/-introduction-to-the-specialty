@@ -51,6 +51,6 @@ app.use((req, res) => {
 if (require.main === module) {
   const PORT = 3000;
   app.listen(PORT, () => {
-    console.log(`Сервер запущен: http://localhost:${PORT}`);
+    // console.log(`Сервер запущен: http://localhost:${PORT}`);
   });
 }
