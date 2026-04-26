@@ -1,0 +1,10 @@
+node_modules
+.git
+.github
+*.log
+.DS_Store
+.gitignore
+README.md
+.eslint*
+.prettier*
+*.md
