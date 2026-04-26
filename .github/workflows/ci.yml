@@ -17,27 +17,27 @@ jobs:
       - name: Проверка наличия README
         run: |
           if [ -f "README.md" ]; then
-            echo "✅ README.md найден"
+            echo "README.md найден"
           else
-            echo "❌ README.md не найден"
+            echo "README.md не найден"
             exit 1
           fi
 
       - name: Проверка наличия backend
         run: |
           if [ -d "backend" ]; then
-            echo "✅ backend найден"
+            echo "backend найден"
           else
-            echo "❌ backend не найден"
+            echo "backend не найден"
             exit 1
           fi
 
       - name: Проверка наличия frontend
         run: |
           if [ -d "frontend" ]; then
-            echo "✅ frontend найден"
+            echo "frontend найден"
           else
-            echo "❌ frontend не найден"
+            echo "frontend не найден"
             exit 1
           fi
 
@@ -46,5 +46,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: [simple-check]
     if: always()
+
     steps:
-      - run: echo "✅ Все проверки пройдены"
+      - run: echo "Все проверки пройдены"
