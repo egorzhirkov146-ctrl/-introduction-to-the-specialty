@@ -48,9 +48,12 @@ app.use((req, res) => {
     res.status(404).json({ error: 'Страница не найдена' });
 });
 
-if (require.main === module) {
-  const PORT = 3000;
-  app.listen(PORT, () => {
-    // console.log(`Сервер запущен: http://localhost:${PORT}`);
-  });
+// Экспорт для тестов
+if (process.env.NODE_ENV !== 'test') {
+    const PORT = 3000;
+    app.listen(PORT, () => {
+        console.log(`Сервер запущен: http://localhost:${PORT}`);
+    });
 }
+
+module.exports = app;
