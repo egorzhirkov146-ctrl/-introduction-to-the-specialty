@@ -1,0 +1,15 @@
+rules:
+  - id: no-console-log
+    pattern: console.log(...)
+    message: console.log не должен попадать в продакшен
+    severity: WARNING
+    languages:
+      - javascript
+
+  - id: unused-variables
+    pattern: |
+      const $X = ...;
+    message: Переменная объявлена, но не используется
+    severity: WARNING
+    languages:
+      - javascript
