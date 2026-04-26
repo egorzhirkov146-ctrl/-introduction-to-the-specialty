@@ -18,14 +18,13 @@ class Calculator {
     return a / b;
   }
 
-  static calculate(num1, num2, operation) {
-    if (isNaN(parseFloat(num1)) || isNaN(parseFloat(num2))) {
-      throw new Error('Введите корректные числа');
-    }
-
+static calculate(num1, num2, operation) {
     const a = parseFloat(num1);
     const b = parseFloat(num2);
 
+    if (isNaN(a) || isNaN(b)) {
+      throw new Error('Введите корректные числа');
+    }
     switch (operation) {
       case '+': return this.add(a, b);
       case '-': return this.subtract(a, b);

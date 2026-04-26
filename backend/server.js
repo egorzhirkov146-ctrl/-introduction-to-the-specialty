@@ -52,7 +52,7 @@ app.use((req, res) => {
 if (process.env.NODE_ENV !== 'test') {
     const PORT = 3000;
     app.listen(PORT, () => {
-        console.log(`Сервер запущен: http://localhost:${PORT}`);
+       // console.log(`Сервер запущен: http://localhost:${PORT}`);
     });
 }
 
