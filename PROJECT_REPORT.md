@@ -69,7 +69,7 @@ test('divide should throw error for division by zero', () => {
   expect(() => Calculator.divide(5, 0)).toThrow('Деление на ноль невозможно');
 });
 
-###3.3. Запуск тестов
+### 3.3. Запуск тестов
 bash
 
 npm run test:unit
@@ -77,24 +77,24 @@ npm run test:integration
 npm run test:e2e
 npm run test:all
 
-###3.4. CI автоматизация
+### 3.4. CI автоматизация
 
 Тесты запускаются автоматически при каждом Pull Request. При ошибках merge блокируется.
-##4. Безопасность
-###4.1. Инструменты анализа
+## 4. Безопасность
+### 4.1. Инструменты анализа
 Инструмент	Назначение	Результаты
 Semgrep	Статический анализ кода	9 найденных проблем (исправлены)
 Trivy	Анализ зависимостей	Уязвимостей HIGH/CRITICAL не найдено
-###4.2. Найденные и исправленные проблемы
+### 4.2. Найденные и исправленные проблемы
 Проблема	Решение
 Неиспользуемые переменные	Удалены из кода
 console.log в продакшене	Закомментирован
 Отсутствие type="button"	Добавлен атрибут
-###4.3. SBOM (Software Bill of Materials)
+### 4.3. SBOM (Software Bill of Materials)
 
 Сгенерирован файл sbom.json в формате CycloneDX, содержащий все зависимости проекта.
-##5. Контейнеризация
-###5.1. Docker образ
+## 5. Контейнеризация
+### 5.1. Docker образ
 dockerfile
 
 FROM node:18-alpine
@@ -106,14 +106,14 @@ COPY frontend ./frontend
 EXPOSE 3000
 CMD ["node", "backend/server.js"]
 
-###5.2. Запуск
+### 5.2. Запуск
 bash
 
 docker build -t web-calculator .
 docker run -p 3000:3000 web-calculator
 
-##6. CI/CD Pipeline
-###6.1. Этапы CI
+## 6. CI/CD Pipeline
+### 6.1. Этапы CI
 
     Unit тесты
 
@@ -127,11 +127,11 @@ docker run -p 3000:3000 web-calculator
 
     Quality Gate
 
-###6.2. GitHub Actions workflow
+### 6.2. GitHub Actions workflow
 
 Файл .github/workflows/ci.yml содержит все этапы. Pipeline запускается при каждом push и pull request.
-##7. Инструкция для разработчика
-###7.1. Клонирование и запуск
+## 7. Инструкция для разработчика
+### 7.1. Клонирование и запуск
 bash
 
 git clone https://github.com/egorzhirkov146-ctrl/-introduction-to-the-specialty.git
@@ -141,19 +141,19 @@ cd backend && npm install && cd ..
 npm start
 
 Открыть: http://localhost:3000
-###7.2. Запуск тестов
+### 7.2. Запуск тестов
 bash
 
 npm run test:unit
 npm run test:integration
 
-###7.3. Запуск через Docker
+### 7.3. Запуск через Docker
 bash
 
 docker build -t web-calculator .
 docker run -p 3000:3000 web-calculator
 
-###7.4. Создание PR для новой функции
+### 7.4. Создание PR для новой функции
 bash
 
 git checkout -b feature/новая-функция
@@ -161,8 +161,8 @@ git add .
 git commit -m "Описание изменений"
 git push origin feature/новая-функция
 
-##8. Выводы
-###8.1. Достигнутые результаты
+## 8. Выводы
+### 8.1. Достигнутые результаты
 
     Разработано работающее веб-приложение
 
@@ -176,7 +176,7 @@ git push origin feature/новая-функция
 
     Создан Docker-образ для воспроизводимого запуска
 
-###8.2. Полученные навыки
+### 8.2. Полученные навыки
 
     Работа с Git и GitHub (ветки, PR, ревью)
 
@@ -190,7 +190,7 @@ git push origin feature/новая-функция
 
     Документирование проекта
 
-###8.3. Планы по улучшению
+### 8.3. Планы по улучшению
 
     Добавить историю вычислений
 
@@ -200,7 +200,7 @@ git push origin feature/новая-функция
 
     Развернуть приложение на облачном хостинге (Render, Railway)
 
-##9. Ссылки
+## 9. Ссылки
 
     Репозиторий: https://github.com/egorzhirkov146-ctrl/-introduction-to-the-specialty
 
@@ -218,8 +218,8 @@ git push origin feature/новая-функция
 
     Pull Request Trivy: https://github.com/egorzhirkov146-ctrl/-introduction-to-the-specialty/pull/8
 
-##10. Заключение
+## 10. Заключение
 
 Проект успешно завершён. Все 8 задач реализованы в соответствии с требованиями. Получен опыт работы с современными инструментами разработки, CI/CD и безопасностью. Проект готов к передаче другому разработчику для дальнейшего развития.
 
-###Автор: egorzhirkov146-ctrl
+### Автор: egorzhirkov146-ctrl
