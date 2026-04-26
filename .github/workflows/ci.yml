@@ -19,15 +19,3 @@ jobs:
         uses: returntocorp/semgrep-action@v1
         with:
           config: .semgrep/semgrep.yml
-
-  quality-gate:
-    name: Quality Gate
-    runs-on: ubuntu-latest
-    needs: [semgrep-security]
-    if: always()
-
-    steps:
-      - name: Проверка статуса
-        run: |
-          echo "Semgrep анализ завершён"
-          echo "Все проверки пройдены! PR можно мёржить."
