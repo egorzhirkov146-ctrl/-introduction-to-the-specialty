@@ -1,9 +1,8 @@
 const express = require('express');
-const path = require('path');
 const app = express();
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '../frontend')));
+app.use(express.static('frontend'));
 
 app.post('/api/calculate', (req, res) => {
     const { num1, num2, operation } = req.body;
@@ -48,12 +47,11 @@ app.use((req, res) => {
     res.status(404).json({ error: 'Страница не найдена' });
 });
 
-// Экспорт для тестов
-if (process.env.NODE_ENV !== 'test') {
+module.exports = app;
+
+if (require.main === module) {
     const PORT = 3000;
     app.listen(PORT, () => {
-       // console.log(`Сервер запущен: http://localhost:${PORT}`);
+        console.log(`Сервер запущен: http://localhost:${PORT}`);
     });
 }
-
-module.exports = app;
