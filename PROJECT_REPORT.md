@@ -16,15 +16,10 @@
 - Разработчики, изучающие веб-технологии
 - Пользователи, которым нужен простой калькулятор в браузере
 
----
-
 ## 2. Архитектура системы
 
 ### 2.1. Общая схема
-
 Клиент (браузер) → Frontend (HTML/CSS/JS) → API → Backend (Node.js) → Вычисление → Ответ
-text
-
 
 ### 2.2. Компоненты
 
@@ -37,28 +32,25 @@ text
 | Безопасность | Semgrep, Trivy | Статический анализ и проверка зависимостей |
 
 ### 2.3. Структура проекта
-
 -introduction-to-the-specialty/
 ├── frontend/
-│ └── index.html # Интерфейс калькулятора
+│ └── index.html
 ├── backend/
-│ ├── server.js # API и серверная логика
-│ ├── calculator.js # Бизнес-логика
-│ └── package.json # Зависимости бэкенда
+│ ├── server.js
+│ ├── calculator.js
+│ └── package.json
 ├── tests/
-│ ├── unit/ # Модульные тесты (Jest)
-│ ├── integration/ # Интеграционные тесты (Supertest)
-│ └── e2e/ # Сквозные тесты (Playwright)
+│ ├── unit/
+│ ├── integration/
+│ └── e2e/
 ├── .github/workflows/
-│ └── ci.yml # CI/CD pipeline
-├── .semgrep/ # Конфигурация Semgrep
-├── Dockerfile # Контейнеризация
-├── docker-compose.yml # Оркестрация контейнеров
-└── README.md # Документация
+│ └── ci.yml
+├── .semgrep/
+├── Dockerfile
+├── docker-compose.yml
+└── README.md
 text
 
-
----
 
 ## 3. Тестирование
 
@@ -80,10 +72,10 @@ test('divide should throw error for division by zero', () => {
 ###3.3. Запуск тестов
 bash
 
-npm run test:unit      # Модульные тесты
-npm run test:integration  # API тесты
-npm run test:e2e       # Сквозные тесты
-npm run test:all       # Все тесты
+npm run test:unit
+npm run test:integration
+npm run test:e2e
+npm run test:all
 
 ###3.4. CI автоматизация
 
@@ -123,17 +115,17 @@ docker run -p 3000:3000 web-calculator
 ##6. CI/CD Pipeline
 ###6.1. Этапы CI
 
-    Unit тесты — проверка логики
+    Unit тесты
 
-    Integration тесты — проверка API
+    Integration тесты
 
-    E2E тесты — проверка сквозных сценариев
+    E2E тесты
 
-    Semgrep — статический анализ безопасности
+    Semgrep
 
-    Trivy — анализ зависимостей
+    Trivy
 
-    Quality Gate — блокировка merge при ошибках
+    Quality Gate
 
 ###6.2. GitHub Actions workflow
 
@@ -165,26 +157,24 @@ docker run -p 3000:3000 web-calculator
 bash
 
 git checkout -b feature/новая-функция
-# внесите изменения
 git add .
 git commit -m "Описание изменений"
 git push origin feature/новая-функция
-# Создайте Pull Request на GitHub
 
 ##8. Выводы
 ###8.1. Достигнутые результаты
 
-     Разработано работающее веб-приложение
+    Разработано работающее веб-приложение
 
-     Настроен CI/CD с автоматическими проверками
+    Настроен CI/CD с автоматическими проверками
 
-     Добавлены тесты разных уровней
+    Добавлены тесты разных уровней
 
-     Проведён статический анализ безопасности
+    Проведён статический анализ безопасности
 
-     Выполнен анализ зависимостей (SBOM)
+    Выполнен анализ зависимостей (SBOM)
 
-     Создан Docker-образ для воспроизводимого запуска
+    Создан Docker-образ для воспроизводимого запуска
 
 ###8.2. Полученные навыки
 
@@ -232,4 +222,4 @@ git push origin feature/новая-функция
 
 Проект успешно завершён. Все 8 задач реализованы в соответствии с требованиями. Получен опыт работы с современными инструментами разработки, CI/CD и безопасностью. Проект готов к передаче другому разработчику для дальнейшего развития.
 
-##Автор: egorzhirkov146-ctrl
+###Автор: egorzhirkov146-ctrl
