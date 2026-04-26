@@ -1,0 +1,50 @@
+rules:
+  - id: hardcoded-secrets
+    pattern-regex: (password|secret|token|api_key|apikey)\s*=\s*['"][^'"]+['"]
+    message: Обнаружен потенциально硬кодированный секрет. Используйте переменные окружения.
+    severity: WARNING
+    languages:
+      - javascript
+      - typescript
+
+  - id: no-eval
+    pattern: eval(...)
+    message: Использование eval() опасно. Избегайте этой функции.
+    severity: ERROR
+    languages:
+      - javascript
+
+  - id: unsafe-exec
+    pattern: exec($USER_INPUT)
+    message: Исполнение команд из пользовательского ввода опасно.
+    severity: ERROR
+    languages:
+      - javascript
+
+  - id: no-console-log
+    pattern: console.log(...)
+    message: console.log не должен попадать в продакшен. Используйте логгер.
+    severity: WARNING
+    languages:
+      - javascript
+
+  - id: missing-error-handling
+    pattern: |
+      try {
+        ...
+      } catch (e) {
+        // пустой catch
+      }
+    message: Пустой блок catch скрывает ошибки. Добавьте обработку.
+    severity: WARNING
+    languages:
+      - javascript
+
+  - id: unused-variables
+    pattern: |
+      const $X = ...;
+      // $X не используется дальше
+    message: Переменная объявлена, но не используется.
+    severity: INFO
+    languages:
+      - javascript
