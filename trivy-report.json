@@ -1,0 +1,19 @@
+{
+  "SchemaVersion": 2,
+  "Trivy": {
+    "Version": "0.70.0"
+  },
+  "ReportID": "019dc8f0-c905-73dd-94c5-dd72f345d91b",
+  "CreatedAt": "2026-04-26T11:38:36.549254068+03:00",
+  "ArtifactID": "sha256:0ce162367cca87b6f728b2aa0d684cf059eae2d13d194f1b7c9dadcfa229f0a1",
+  "ArtifactName": ".",
+  "ArtifactType": "repository",
+  "Metadata": {
+    "RepoURL": "https://github.com/egorzhirkov146-ctrl/-introduction-to-the-specialty.git",
+    "Branch": "main",
+    "Commit": "04ae0ab5015a98a557af448538e9a5bb5012cc97",
+    "CommitMsg": "Добавлен README.md с описанием калькулятора",
+    "Author": "egorzhirkov146-ctrl \u003cegorzhirkov146-ctrl@users.noreply.github.com\u003e",
+    "Committer": "egorzhirkov146-ctrl \u003cegorzhirkov146-ctrl@users.noreply.github.com\u003e"
+  }
+}
