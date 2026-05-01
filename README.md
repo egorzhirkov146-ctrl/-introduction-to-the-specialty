@@ -42,20 +42,18 @@
 
 ## Запуск проекта
 
-1. **Клонировать репозиторий**
-   ```bash
-   git clone https://github.com/egorzhirkov146-ctrl/-introduction-to-the-specialty.git
-   cd -introduction-to-the-specialty
-2. **Установить зависимости**
-cd backend
-npm install
-3. **Запустить сервер**
-node server.js
-4. **Открыть в браузере**
-http://localhost:3000
-Планы по улучшению
+### 1. Установите Node.js
+Скачайте с https://nodejs.org/ (выберите LTS версию)
 
-Добавить историю вычислений (localStorage)
-Реализовать тёмную тему оформления
-Добавить возведение в степень и квадратный корень
-Написать unit-тесты для бэкенда
+### 2. Проверьте установку
+```bash
+node -v
+npm -v
+### 3. Скачайте и запустите проект
+git clone https://github.com/egorzhirkov146-ctrl/-introduction-to-the-specialty.git
+cd -introduction-to-the-specialty
+npm install
+cd backend && npm install && cd ..
+npm start
+
+Откройте в браузере: http://localhost:3000
